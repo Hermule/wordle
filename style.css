@@ -31,8 +31,9 @@ body {
 
 h1 {
     margin: 50px;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 900;
+    text-size-adjust: auto;
 }
 
 .container {
@@ -46,11 +47,10 @@ h1 {
 
 .row {
     display: flex;
-    justify-content: space-between;
-    padding: 0 10%;
     flex: 1 1 auto;
+    padding: 0 10%;
     height: 50px;
-    gap: 25px;
+    gap: 20px;
 }
 
 .auswahl {
@@ -62,4 +62,17 @@ h1 {
 .btnAuswahl {
     flex: 1 1 auto;
     height: 50px;
+}
+
+.flex-item {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    font-size: 40px;
+    text-transform: uppercase;
+}
+
+.flex.button {
+    flex: 1 0 auto;
+    min-width: 60px;
 }
