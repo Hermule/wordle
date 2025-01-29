@@ -76,3 +76,11 @@ h1 {
     flex: 1 0 auto;
     min-width: 60px;
 }
+
+.green {
+    background-color: lightgreen;
+}
+
+.yellow {
+    background-color: lightyellow;
+}
