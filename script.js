@@ -1,7 +1,7 @@
 let nodeList = document.querySelectorAll(".btnAuswahl");
 let rowNumber = 0;
 let columns;
-let targetWord = "Rooe";
+let targetWord = "Rooo";
 
 
 for (let i = 0; i < nodeList.length; i++) {
@@ -19,6 +19,11 @@ for (let i = 0; i < nodeList.length; i++) {
                     return;
                 }
                 e.preventDefault();
+            });
+            input.addEventListener("keyup", function(e){
+                if (e.key >= 'a' && e.key <= 'z') {
+                    this.nextElementSibling.focus();;
+                }
             });
             currentRow.appendChild(input);
         }
@@ -42,6 +47,18 @@ function addNextRow(){
                 let input = document.createElement("input");
                 input.classList.add("flex-item"); // Add class instead of inline style
                 input.maxLength = 1;
+                input.addEventListener("keydown", function(e){
+                    const regex = /[a-zA-Z]/;
+                    if (e.key.match(regex)) {
+                        return;
+                    }
+                    e.preventDefault();
+                });
+                input.addEventListener("keyup", function(e){
+                    if (e.key >= 'a' && e.key <= 'z') {
+                        this.nextElementSibling.focus();;
+                    }
+                });
                 currentRow.appendChild(input);
             }
             const btnRaten = document.createElement("button");
@@ -50,7 +67,7 @@ function addNextRow(){
             btnRaten.addEventListener("click", addNextRow);
             currentRow.appendChild(btnRaten);
             let firstElement = document.querySelector(".flex-item");
-            firstElement.focus();
+            getRow(rowNumber).children[0].focus();
         }
     };
     
@@ -89,7 +106,7 @@ function checkWord(guessedWord, _targetWord, rowNumber){
         else{
             characterCount[targetWord[i]] = 1;
         }
-        alreadyChecked[targetWord[i]] = 0;
+        alreadyChecked[i] = 0;
     }
     let currentRow = getRow(rowNumber);
 
@@ -98,7 +115,7 @@ function checkWord(guessedWord, _targetWord, rowNumber){
         if (currentRow.children[i].value == targetWord[i]){
             currentRow.children[i].classList.add("green");
             characterCount[targetWord[i]]--;
-            alreadyChecked[targetWord[i]] = 1;
+            alreadyChecked[i] = 1;
         }
     }
     for (let i = 0; i < columns; i++){
@@ -112,6 +129,7 @@ function checkWord(guessedWord, _targetWord, rowNumber){
                 if (characterCount[targetWord[j]] > 0){
                     currentRow.children[i].classList.add("yellow");
                     characterCount[targetWord[j]]--;
+                    break;
                 }
             }
         }
