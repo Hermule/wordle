@@ -2,6 +2,7 @@ let nodeList = document.querySelectorAll(".btnAuswahl");
 let rowNumber = 0;
 let columns;
 let targetWord = "Rooo";
+let won = false;
 
 
 for (let i = 0; i < nodeList.length; i++) {
@@ -73,6 +74,17 @@ function addNextRow(){
     
 }
 
+function checkWin(alreadyChecked){
+    for (let i = 0; i < Object.keys(alreadyChecked).length; i++){
+        if (alreadyChecked[i] == 0){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
 function getWord(currentRow){
     let word = "";
     console.log(currentRow);
@@ -87,6 +99,9 @@ function getWord(currentRow){
         }
     }
     checkWord(word, targetWord, rowNumber);
+    if (won == true){
+        return false;
+    }
     return true;
 }
 
@@ -99,6 +114,7 @@ function checkWord(guessedWord, _targetWord, rowNumber){
     targetWord = _targetWord.toLowerCase();
     let characterCount = {};
     let alreadyChecked = {}; // if 1 = already checked
+    
     for (let i = 0; i < targetWord.length; i++){
         if (targetWord[i] in characterCount){
             characterCount[targetWord[i]]++;
@@ -118,6 +134,9 @@ function checkWord(guessedWord, _targetWord, rowNumber){
             alreadyChecked[i] = 1;
         }
     }
+
+    won = checkWin(alreadyChecked);
+    
     for (let i = 0; i < columns; i++){
         if (alreadyChecked[i] == 1){
             continue;
@@ -134,4 +153,18 @@ function checkWord(guessedWord, _targetWord, rowNumber){
             }
         }
     }
+
+    return false;
+}
+
+function killAllRows(){
+    let rowList = document.querySelectorAll(".row")
+    let rows = Array.prototype.slice.call(rowList);
+    for (element of rows){
+        while (element.firstChild) {
+            element.removeChild(element.lastChild);
+          }
+    }
+    won = false;
+    rowNumber = 0;
 }
